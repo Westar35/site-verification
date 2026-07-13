@@ -1,0 +1,19 @@
+run:
+  timeout: 5m
+
+linters:
+  enable:
+    - govet
+    - errcheck
+    - staticcheck
+    - unused
+    - gofmt
+    - goimports
+    - ineffassign
+    - misspell
+    - bodyclose
+    - unconvert
+
+issues:
+  exclude-dirs:
+    - gen

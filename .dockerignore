@@ -1,0 +1,10 @@
+.git
+.gitignore
+.gitattributes
+.editorconfig
+.golangci.yml
+.claude
+.env
+.env.example
+*.md
+bin/
