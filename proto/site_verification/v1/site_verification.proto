@@ -4,8 +4,8 @@ package site_verification_v1;
 
 option go_package = "github.com/Westar35/site-verification/gen/site_verification/v1;site_verification_v1";
 
-import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
 
 service SiteVerificationService {
   rpc GetDomain(GetDomainRequest) returns (GetDomainResponse);
