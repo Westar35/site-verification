@@ -1,62 +1,58 @@
 syntax = "proto3";
 
-package site_verification.v1;
+package site_verification_v1;
+
+option go_package = "github.com/Westar35/site-verification/gen/site_verification/v1;site_verification_v1";
 
 import "google/protobuf/timestamp.proto";
-
-option go_package = "github.com/Westar35/dns-check-service/gen/site_verification/v1;sitev1";
+import "google/protobuf/empty.proto";
 
 service SiteVerificationService {
-  rpc GetDomainVerificationRecord(GetDomainVerificationRecordRequest) returns (GetDomainVerificationRecordResponse);
-  rpc VerifyDomain(VerifyDomainRequest) returns (VerifyDomainResponse);
-  rpc GetDomainStatus(GetDomainStatusRequest) returns (GetDomainStatusResponse);
-  rpc ListVerifiedDomains(ListVerifiedDomainsRequest) returns (ListVerifiedDomainsResponse);
-  rpc DeleteDomainVerification(DeleteDomainVerificationRequest) returns (DeleteDomainVerificationResponse);
+  rpc GetDomain(GetDomainRequest) returns (GetDomainResponse);
+  rpc GetVerificationRecord(GetVerificationRecordRequest) returns (GetVerificationRecordResponse);
+  rpc ListDomains(ListDomainsRequest) returns (ListDomainsResponse);
+  rpc DeleteDomain(DeleteDomainRequest) returns (google.protobuf.Empty);
+  rpc VerifyDomain(VerifyDomainRequest) returns (google.protobuf.Empty);
 }
 
-enum DomainStatus {
-  DOMAIN_STATUS_UNSPECIFIED = 0;
-  DOMAIN_STATUS_NOT_VERIFIED = 1;
-  DOMAIN_STATUS_VERIFIED = 2;
-}
-
-message GetDomainVerificationRecordRequest { string domain = 1; }
-message GetDomainVerificationRecordResponse {
+message Domain {
   string domain = 1;
+  bool verified = 2;
+  google.protobuf.Timestamp verified_at = 3;
+}
+
+message DNSRecord {
   string record_type = 2;
   string record_name = 3;
   string record_value = 4;
-  string verification_hash = 5;
 }
 
-message VerifyDomainRequest { string domain = 1; }
-message VerifyDomainResponse {
+message GetDomainRequest {
   string domain = 1;
-  DomainStatus status = 2;
-  google.protobuf.Timestamp verified_at = 3;
 }
 
-message GetDomainStatusRequest { string domain = 1; }
-message GetDomainStatusResponse {
-  string domain = 1;
-  DomainStatus status = 2;
-  google.protobuf.Timestamp verified_at = 3;
+message GetDomainResponse {
+  Domain domain = 1;
 }
 
-message ListVerifiedDomainsRequest {}
-message ListVerifiedDomainsResponse {
-  repeated VerifiedDomainItem domains = 1;
-}
-message VerifiedDomainItem {
+message GetVerificationRecordRequest {
   string domain = 1;
-  DomainStatus status = 2;
-  google.protobuf.Timestamp verified_at = 3;
-  google.protobuf.Timestamp created_at = 4;
-  google.protobuf.Timestamp updated_at = 5;
 }
 
-message DeleteDomainVerificationRequest { string domain = 1; }
-message DeleteDomainVerificationResponse {
+message GetVerificationRecordResponse {
+  DNSRecord record = 1;
+}
+
+message ListDomainsRequest {}
+
+message ListDomainsResponse {
+  repeated Domain domains = 1;
+}
+
+message DeleteDomainRequest {
   string domain = 1;
-  DomainStatus status = 2;
+}
+
+message VerifyDomainRequest {
+  string domain = 1;
 }
