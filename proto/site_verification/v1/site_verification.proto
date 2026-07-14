@@ -12,7 +12,7 @@ service SiteVerificationService {
   rpc GetVerificationRecord(GetVerificationRecordRequest) returns (GetVerificationRecordResponse);
   rpc ListDomains(ListDomainsRequest) returns (ListDomainsResponse);
   rpc DeleteDomain(DeleteDomainRequest) returns (google.protobuf.Empty);
-  rpc VerifyDomain(VerifyDomainRequest) returns (google.protobuf.Empty);
+  rpc VerifyDomain(VerifyDomainRequest) returns (VerifyDomainResponse);
 }
 
 message Domain {
@@ -55,4 +55,8 @@ message DeleteDomainRequest {
 
 message VerifyDomainRequest {
   string domain = 1;
+}
+
+message VerifyDomainResponse {
+  Domain domain = 1;
 }
