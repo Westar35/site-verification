@@ -22,9 +22,9 @@ message Domain {
 }
 
 message DNSRecord {
-  string record_type = 2;
-  string record_name = 3;
-  string record_value = 4;
+  string record_type = 1;
+  string record_name = 2;
+  string record_value = 3;
 }
 
 message GetDomainRequest {
