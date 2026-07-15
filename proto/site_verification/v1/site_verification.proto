@@ -22,8 +22,8 @@ message Domain {
 }
 
 message DNSRecord {
-  string record_type = 1;
-  string record_name = 2;
+  string record_name = 1;
+  string record_type = 2;
   string record_value = 3;
 }
 
