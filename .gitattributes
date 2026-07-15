@@ -1,9 +1,6 @@
-* text=auto eol=lf
-
-*.go text eol=lf
-go.mod text eol=lf
-go.sum text eol=lf
-*.proto text eol=lf
-*.md text eol=lf
-Makefile text eol=lf
-Dockerfile text eol=lf
+*.go       text       eol=lf                         linguist-language=Go
+*.md       text       eol=lf                         linguist-language=Markdown
+*.pb.go    text -diff eol=lf linguist-generated=true linguist-language=Go
+*.yml      text       eol=lf                         linguist-language=YAML
+go.mod     text -diff eol=lf                         linguist-language=Go
+go.sum     text -diff eol=lf                         linguist-language=Go

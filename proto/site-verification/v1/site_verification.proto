@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package site_verification_v1;
+package site_verification.v1;
 
 option go_package = "github.com/Westar35/site-verification/gen/site-verification/v1;site_verification_v1";
 
