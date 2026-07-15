@@ -23,6 +23,52 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type RecordType int32
+
+const (
+	RecordType_RECORD_TYPE_UNSPECIFIED RecordType = 0
+	RecordType_RECORD_TYPE_TXT         RecordType = 1
+)
+
+// Enum value maps for RecordType.
+var (
+	RecordType_name = map[int32]string{
+		0: "RECORD_TYPE_UNSPECIFIED",
+		1: "RECORD_TYPE_TXT",
+	}
+	RecordType_value = map[string]int32{
+		"RECORD_TYPE_UNSPECIFIED": 0,
+		"RECORD_TYPE_TXT":         1,
+	}
+)
+
+func (x RecordType) Enum() *RecordType {
+	p := new(RecordType)
+	*p = x
+	return p
+}
+
+func (x RecordType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (RecordType) Descriptor() protoreflect.EnumDescriptor {
+	return file_site_verification_v1_site_verification_proto_enumTypes[0].Descriptor()
+}
+
+func (RecordType) Type() protoreflect.EnumType {
+	return &file_site_verification_v1_site_verification_proto_enumTypes[0]
+}
+
+func (x RecordType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use RecordType.Descriptor instead.
+func (RecordType) EnumDescriptor() ([]byte, []int) {
+	return file_site_verification_v1_site_verification_proto_rawDescGZIP(), []int{0}
+}
+
 type Domain struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Domain        string                 `protobuf:"bytes,1,opt,name=domain,proto3" json:"domain,omitempty"`
@@ -85,9 +131,9 @@ func (x *Domain) GetVerifiedAt() *timestamppb.Timestamp {
 
 type DNSRecord struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	RecordName    string                 `protobuf:"bytes,1,opt,name=record_name,json=recordName,proto3" json:"record_name,omitempty"`
-	RecordType    string                 `protobuf:"bytes,2,opt,name=record_type,json=recordType,proto3" json:"record_type,omitempty"`
-	RecordValue   string                 `protobuf:"bytes,3,opt,name=record_value,json=recordValue,proto3" json:"record_value,omitempty"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Type          RecordType             `protobuf:"varint,2,opt,name=type,proto3,enum=site_verification_v1.RecordType" json:"type,omitempty"`
+	Value         string                 `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -122,23 +168,23 @@ func (*DNSRecord) Descriptor() ([]byte, []int) {
 	return file_site_verification_v1_site_verification_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *DNSRecord) GetRecordName() string {
+func (x *DNSRecord) GetName() string {
 	if x != nil {
-		return x.RecordName
+		return x.Name
 	}
 	return ""
 }
 
-func (x *DNSRecord) GetRecordType() string {
+func (x *DNSRecord) GetType() RecordType {
 	if x != nil {
-		return x.RecordType
+		return x.Type
 	}
-	return ""
+	return RecordType_RECORD_TYPE_UNSPECIFIED
 }
 
-func (x *DNSRecord) GetRecordValue() string {
+func (x *DNSRecord) GetValue() string {
 	if x != nil {
-		return x.RecordValue
+		return x.Value
 	}
 	return ""
 }
@@ -319,42 +365,6 @@ func (x *GetVerificationRecordResponse) GetRecord() *DNSRecord {
 	return nil
 }
 
-type ListDomainsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListDomainsRequest) Reset() {
-	*x = ListDomainsRequest{}
-	mi := &file_site_verification_v1_site_verification_proto_msgTypes[6]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListDomainsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListDomainsRequest) ProtoMessage() {}
-
-func (x *ListDomainsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_site_verification_v1_site_verification_proto_msgTypes[6]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListDomainsRequest.ProtoReflect.Descriptor instead.
-func (*ListDomainsRequest) Descriptor() ([]byte, []int) {
-	return file_site_verification_v1_site_verification_proto_rawDescGZIP(), []int{6}
-}
-
 type ListDomainsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Domains       []*Domain              `protobuf:"bytes,1,rep,name=domains,proto3" json:"domains,omitempty"`
@@ -364,7 +374,7 @@ type ListDomainsResponse struct {
 
 func (x *ListDomainsResponse) Reset() {
 	*x = ListDomainsResponse{}
-	mi := &file_site_verification_v1_site_verification_proto_msgTypes[7]
+	mi := &file_site_verification_v1_site_verification_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -376,7 +386,7 @@ func (x *ListDomainsResponse) String() string {
 func (*ListDomainsResponse) ProtoMessage() {}
 
 func (x *ListDomainsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_site_verification_v1_site_verification_proto_msgTypes[7]
+	mi := &file_site_verification_v1_site_verification_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -389,7 +399,7 @@ func (x *ListDomainsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListDomainsResponse.ProtoReflect.Descriptor instead.
 func (*ListDomainsResponse) Descriptor() ([]byte, []int) {
-	return file_site_verification_v1_site_verification_proto_rawDescGZIP(), []int{7}
+	return file_site_verification_v1_site_verification_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *ListDomainsResponse) GetDomains() []*Domain {
@@ -408,7 +418,7 @@ type DeleteDomainRequest struct {
 
 func (x *DeleteDomainRequest) Reset() {
 	*x = DeleteDomainRequest{}
-	mi := &file_site_verification_v1_site_verification_proto_msgTypes[8]
+	mi := &file_site_verification_v1_site_verification_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -420,7 +430,7 @@ func (x *DeleteDomainRequest) String() string {
 func (*DeleteDomainRequest) ProtoMessage() {}
 
 func (x *DeleteDomainRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_site_verification_v1_site_verification_proto_msgTypes[8]
+	mi := &file_site_verification_v1_site_verification_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -433,7 +443,7 @@ func (x *DeleteDomainRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteDomainRequest.ProtoReflect.Descriptor instead.
 func (*DeleteDomainRequest) Descriptor() ([]byte, []int) {
-	return file_site_verification_v1_site_verification_proto_rawDescGZIP(), []int{8}
+	return file_site_verification_v1_site_verification_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *DeleteDomainRequest) GetDomain() string {
@@ -452,7 +462,7 @@ type VerifyDomainRequest struct {
 
 func (x *VerifyDomainRequest) Reset() {
 	*x = VerifyDomainRequest{}
-	mi := &file_site_verification_v1_site_verification_proto_msgTypes[9]
+	mi := &file_site_verification_v1_site_verification_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -464,7 +474,7 @@ func (x *VerifyDomainRequest) String() string {
 func (*VerifyDomainRequest) ProtoMessage() {}
 
 func (x *VerifyDomainRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_site_verification_v1_site_verification_proto_msgTypes[9]
+	mi := &file_site_verification_v1_site_verification_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -477,7 +487,7 @@ func (x *VerifyDomainRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VerifyDomainRequest.ProtoReflect.Descriptor instead.
 func (*VerifyDomainRequest) Descriptor() ([]byte, []int) {
-	return file_site_verification_v1_site_verification_proto_rawDescGZIP(), []int{9}
+	return file_site_verification_v1_site_verification_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *VerifyDomainRequest) GetDomain() string {
@@ -485,50 +495,6 @@ func (x *VerifyDomainRequest) GetDomain() string {
 		return x.Domain
 	}
 	return ""
-}
-
-type VerifyDomainResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Domain        *Domain                `protobuf:"bytes,1,opt,name=domain,proto3" json:"domain,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *VerifyDomainResponse) Reset() {
-	*x = VerifyDomainResponse{}
-	mi := &file_site_verification_v1_site_verification_proto_msgTypes[10]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *VerifyDomainResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*VerifyDomainResponse) ProtoMessage() {}
-
-func (x *VerifyDomainResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_site_verification_v1_site_verification_proto_msgTypes[10]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use VerifyDomainResponse.ProtoReflect.Descriptor instead.
-func (*VerifyDomainResponse) Descriptor() ([]byte, []int) {
-	return file_site_verification_v1_site_verification_proto_rawDescGZIP(), []int{10}
-}
-
-func (x *VerifyDomainResponse) GetDomain() *Domain {
-	if x != nil {
-		return x.Domain
-	}
-	return nil
 }
 
 var File_site_verification_v1_site_verification_proto protoreflect.FileDescriptor
@@ -540,13 +506,11 @@ const file_site_verification_v1_site_verification_proto_rawDesc = "" +
 	"\x06domain\x18\x01 \x01(\tR\x06domain\x12\x1a\n" +
 	"\bverified\x18\x02 \x01(\bR\bverified\x12;\n" +
 	"\vverified_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"verifiedAt\"p\n" +
-	"\tDNSRecord\x12\x1f\n" +
-	"\vrecord_name\x18\x01 \x01(\tR\n" +
-	"recordName\x12\x1f\n" +
-	"\vrecord_type\x18\x02 \x01(\tR\n" +
-	"recordType\x12!\n" +
-	"\frecord_value\x18\x03 \x01(\tR\vrecordValue\"*\n" +
+	"verifiedAt\"k\n" +
+	"\tDNSRecord\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x124\n" +
+	"\x04type\x18\x02 \x01(\x0e2 .site_verification_v1.RecordTypeR\x04type\x12\x14\n" +
+	"\x05value\x18\x03 \x01(\tR\x05value\"*\n" +
 	"\x10GetDomainRequest\x12\x16\n" +
 	"\x06domain\x18\x01 \x01(\tR\x06domain\"I\n" +
 	"\x11GetDomainResponse\x124\n" +
@@ -554,22 +518,23 @@ const file_site_verification_v1_site_verification_proto_rawDesc = "" +
 	"\x1cGetVerificationRecordRequest\x12\x16\n" +
 	"\x06domain\x18\x01 \x01(\tR\x06domain\"X\n" +
 	"\x1dGetVerificationRecordResponse\x127\n" +
-	"\x06record\x18\x01 \x01(\v2\x1f.site_verification_v1.DNSRecordR\x06record\"\x14\n" +
-	"\x12ListDomainsRequest\"M\n" +
+	"\x06record\x18\x01 \x01(\v2\x1f.site_verification_v1.DNSRecordR\x06record\"M\n" +
 	"\x13ListDomainsResponse\x126\n" +
 	"\adomains\x18\x01 \x03(\v2\x1c.site_verification_v1.DomainR\adomains\"-\n" +
 	"\x13DeleteDomainRequest\x12\x16\n" +
 	"\x06domain\x18\x01 \x01(\tR\x06domain\"-\n" +
 	"\x13VerifyDomainRequest\x12\x16\n" +
-	"\x06domain\x18\x01 \x01(\tR\x06domain\"L\n" +
-	"\x14VerifyDomainResponse\x124\n" +
-	"\x06domain\x18\x01 \x01(\v2\x1c.site_verification_v1.DomainR\x06domain2\x98\x04\n" +
+	"\x06domain\x18\x01 \x01(\tR\x06domain*>\n" +
+	"\n" +
+	"RecordType\x12\x1b\n" +
+	"\x17RECORD_TYPE_UNSPECIFIED\x10\x00\x12\x13\n" +
+	"\x0fRECORD_TYPE_TXT\x10\x012\xf2\x03\n" +
 	"\x17SiteVerificationService\x12\\\n" +
 	"\tGetDomain\x12&.site_verification_v1.GetDomainRequest\x1a'.site_verification_v1.GetDomainResponse\x12\x80\x01\n" +
-	"\x15GetVerificationRecord\x122.site_verification_v1.GetVerificationRecordRequest\x1a3.site_verification_v1.GetVerificationRecordResponse\x12b\n" +
-	"\vListDomains\x12(.site_verification_v1.ListDomainsRequest\x1a).site_verification_v1.ListDomainsResponse\x12Q\n" +
-	"\fDeleteDomain\x12).site_verification_v1.DeleteDomainRequest\x1a\x16.google.protobuf.Empty\x12e\n" +
-	"\fVerifyDomain\x12).site_verification_v1.VerifyDomainRequest\x1a*.site_verification_v1.VerifyDomainResponseBUZSgithub.com/Westar35/site-verification/gen/site_verification/v1;site_verification_v1b\x06proto3"
+	"\x15GetVerificationRecord\x122.site_verification_v1.GetVerificationRecordRequest\x1a3.site_verification_v1.GetVerificationRecordResponse\x12P\n" +
+	"\vListDomains\x12\x16.google.protobuf.Empty\x1a).site_verification_v1.ListDomainsResponse\x12Q\n" +
+	"\fDeleteDomain\x12).site_verification_v1.DeleteDomainRequest\x1a\x16.google.protobuf.Empty\x12Q\n" +
+	"\fVerifyDomain\x12).site_verification_v1.VerifyDomainRequest\x1a\x16.google.protobuf.EmptyBUZSgithub.com/Westar35/site-verification/gen/site-verification/v1;site_verification_v1b\x06proto3"
 
 var (
 	file_site_verification_v1_site_verification_proto_rawDescOnce sync.Once
@@ -583,38 +548,38 @@ func file_site_verification_v1_site_verification_proto_rawDescGZIP() []byte {
 	return file_site_verification_v1_site_verification_proto_rawDescData
 }
 
-var file_site_verification_v1_site_verification_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_site_verification_v1_site_verification_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_site_verification_v1_site_verification_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_site_verification_v1_site_verification_proto_goTypes = []any{
-	(*Domain)(nil),                        // 0: site_verification_v1.Domain
-	(*DNSRecord)(nil),                     // 1: site_verification_v1.DNSRecord
-	(*GetDomainRequest)(nil),              // 2: site_verification_v1.GetDomainRequest
-	(*GetDomainResponse)(nil),             // 3: site_verification_v1.GetDomainResponse
-	(*GetVerificationRecordRequest)(nil),  // 4: site_verification_v1.GetVerificationRecordRequest
-	(*GetVerificationRecordResponse)(nil), // 5: site_verification_v1.GetVerificationRecordResponse
-	(*ListDomainsRequest)(nil),            // 6: site_verification_v1.ListDomainsRequest
+	(RecordType)(0),                       // 0: site_verification_v1.RecordType
+	(*Domain)(nil),                        // 1: site_verification_v1.Domain
+	(*DNSRecord)(nil),                     // 2: site_verification_v1.DNSRecord
+	(*GetDomainRequest)(nil),              // 3: site_verification_v1.GetDomainRequest
+	(*GetDomainResponse)(nil),             // 4: site_verification_v1.GetDomainResponse
+	(*GetVerificationRecordRequest)(nil),  // 5: site_verification_v1.GetVerificationRecordRequest
+	(*GetVerificationRecordResponse)(nil), // 6: site_verification_v1.GetVerificationRecordResponse
 	(*ListDomainsResponse)(nil),           // 7: site_verification_v1.ListDomainsResponse
 	(*DeleteDomainRequest)(nil),           // 8: site_verification_v1.DeleteDomainRequest
 	(*VerifyDomainRequest)(nil),           // 9: site_verification_v1.VerifyDomainRequest
-	(*VerifyDomainResponse)(nil),          // 10: site_verification_v1.VerifyDomainResponse
-	(*timestamppb.Timestamp)(nil),         // 11: google.protobuf.Timestamp
-	(*emptypb.Empty)(nil),                 // 12: google.protobuf.Empty
+	(*timestamppb.Timestamp)(nil),         // 10: google.protobuf.Timestamp
+	(*emptypb.Empty)(nil),                 // 11: google.protobuf.Empty
 }
 var file_site_verification_v1_site_verification_proto_depIdxs = []int32{
-	11, // 0: site_verification_v1.Domain.verified_at:type_name -> google.protobuf.Timestamp
-	0,  // 1: site_verification_v1.GetDomainResponse.domain:type_name -> site_verification_v1.Domain
-	1,  // 2: site_verification_v1.GetVerificationRecordResponse.record:type_name -> site_verification_v1.DNSRecord
-	0,  // 3: site_verification_v1.ListDomainsResponse.domains:type_name -> site_verification_v1.Domain
-	0,  // 4: site_verification_v1.VerifyDomainResponse.domain:type_name -> site_verification_v1.Domain
-	2,  // 5: site_verification_v1.SiteVerificationService.GetDomain:input_type -> site_verification_v1.GetDomainRequest
-	4,  // 6: site_verification_v1.SiteVerificationService.GetVerificationRecord:input_type -> site_verification_v1.GetVerificationRecordRequest
-	6,  // 7: site_verification_v1.SiteVerificationService.ListDomains:input_type -> site_verification_v1.ListDomainsRequest
+	10, // 0: site_verification_v1.Domain.verified_at:type_name -> google.protobuf.Timestamp
+	0,  // 1: site_verification_v1.DNSRecord.type:type_name -> site_verification_v1.RecordType
+	1,  // 2: site_verification_v1.GetDomainResponse.domain:type_name -> site_verification_v1.Domain
+	2,  // 3: site_verification_v1.GetVerificationRecordResponse.record:type_name -> site_verification_v1.DNSRecord
+	1,  // 4: site_verification_v1.ListDomainsResponse.domains:type_name -> site_verification_v1.Domain
+	3,  // 5: site_verification_v1.SiteVerificationService.GetDomain:input_type -> site_verification_v1.GetDomainRequest
+	5,  // 6: site_verification_v1.SiteVerificationService.GetVerificationRecord:input_type -> site_verification_v1.GetVerificationRecordRequest
+	11, // 7: site_verification_v1.SiteVerificationService.ListDomains:input_type -> google.protobuf.Empty
 	8,  // 8: site_verification_v1.SiteVerificationService.DeleteDomain:input_type -> site_verification_v1.DeleteDomainRequest
 	9,  // 9: site_verification_v1.SiteVerificationService.VerifyDomain:input_type -> site_verification_v1.VerifyDomainRequest
-	3,  // 10: site_verification_v1.SiteVerificationService.GetDomain:output_type -> site_verification_v1.GetDomainResponse
-	5,  // 11: site_verification_v1.SiteVerificationService.GetVerificationRecord:output_type -> site_verification_v1.GetVerificationRecordResponse
+	4,  // 10: site_verification_v1.SiteVerificationService.GetDomain:output_type -> site_verification_v1.GetDomainResponse
+	6,  // 11: site_verification_v1.SiteVerificationService.GetVerificationRecord:output_type -> site_verification_v1.GetVerificationRecordResponse
 	7,  // 12: site_verification_v1.SiteVerificationService.ListDomains:output_type -> site_verification_v1.ListDomainsResponse
-	12, // 13: site_verification_v1.SiteVerificationService.DeleteDomain:output_type -> google.protobuf.Empty
-	10, // 14: site_verification_v1.SiteVerificationService.VerifyDomain:output_type -> site_verification_v1.VerifyDomainResponse
+	11, // 13: site_verification_v1.SiteVerificationService.DeleteDomain:output_type -> google.protobuf.Empty
+	11, // 14: site_verification_v1.SiteVerificationService.VerifyDomain:output_type -> google.protobuf.Empty
 	10, // [10:15] is the sub-list for method output_type
 	5,  // [5:10] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name
@@ -632,13 +597,14 @@ func file_site_verification_v1_site_verification_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_site_verification_v1_site_verification_proto_rawDesc), len(file_site_verification_v1_site_verification_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   11,
+			NumEnums:      1,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_site_verification_v1_site_verification_proto_goTypes,
 		DependencyIndexes: file_site_verification_v1_site_verification_proto_depIdxs,
+		EnumInfos:         file_site_verification_v1_site_verification_proto_enumTypes,
 		MessageInfos:      file_site_verification_v1_site_verification_proto_msgTypes,
 	}.Build()
 	File_site_verification_v1_site_verification_proto = out.File

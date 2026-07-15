@@ -8,7 +8,7 @@ import (
 	connect "connectrpc.com/connect"
 	context "context"
 	errors "errors"
-	v1 "github.com/Westar35/site-verification/gen/site_verification/v1"
+	v1 "github.com/Westar35/site-verification/gen/site-verification/v1"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	http "net/http"
 	strings "strings"
@@ -56,9 +56,9 @@ const (
 type SiteVerificationServiceClient interface {
 	GetDomain(context.Context, *connect.Request[v1.GetDomainRequest]) (*connect.Response[v1.GetDomainResponse], error)
 	GetVerificationRecord(context.Context, *connect.Request[v1.GetVerificationRecordRequest]) (*connect.Response[v1.GetVerificationRecordResponse], error)
-	ListDomains(context.Context, *connect.Request[v1.ListDomainsRequest]) (*connect.Response[v1.ListDomainsResponse], error)
+	ListDomains(context.Context, *connect.Request[emptypb.Empty]) (*connect.Response[v1.ListDomainsResponse], error)
 	DeleteDomain(context.Context, *connect.Request[v1.DeleteDomainRequest]) (*connect.Response[emptypb.Empty], error)
-	VerifyDomain(context.Context, *connect.Request[v1.VerifyDomainRequest]) (*connect.Response[v1.VerifyDomainResponse], error)
+	VerifyDomain(context.Context, *connect.Request[v1.VerifyDomainRequest]) (*connect.Response[emptypb.Empty], error)
 }
 
 // NewSiteVerificationServiceClient constructs a client for the
@@ -85,7 +85,7 @@ func NewSiteVerificationServiceClient(httpClient connect.HTTPClient, baseURL str
 			connect.WithSchema(siteVerificationServiceMethods.ByName("GetVerificationRecord")),
 			connect.WithClientOptions(opts...),
 		),
-		listDomains: connect.NewClient[v1.ListDomainsRequest, v1.ListDomainsResponse](
+		listDomains: connect.NewClient[emptypb.Empty, v1.ListDomainsResponse](
 			httpClient,
 			baseURL+SiteVerificationServiceListDomainsProcedure,
 			connect.WithSchema(siteVerificationServiceMethods.ByName("ListDomains")),
@@ -97,7 +97,7 @@ func NewSiteVerificationServiceClient(httpClient connect.HTTPClient, baseURL str
 			connect.WithSchema(siteVerificationServiceMethods.ByName("DeleteDomain")),
 			connect.WithClientOptions(opts...),
 		),
-		verifyDomain: connect.NewClient[v1.VerifyDomainRequest, v1.VerifyDomainResponse](
+		verifyDomain: connect.NewClient[v1.VerifyDomainRequest, emptypb.Empty](
 			httpClient,
 			baseURL+SiteVerificationServiceVerifyDomainProcedure,
 			connect.WithSchema(siteVerificationServiceMethods.ByName("VerifyDomain")),
@@ -110,9 +110,9 @@ func NewSiteVerificationServiceClient(httpClient connect.HTTPClient, baseURL str
 type siteVerificationServiceClient struct {
 	getDomain             *connect.Client[v1.GetDomainRequest, v1.GetDomainResponse]
 	getVerificationRecord *connect.Client[v1.GetVerificationRecordRequest, v1.GetVerificationRecordResponse]
-	listDomains           *connect.Client[v1.ListDomainsRequest, v1.ListDomainsResponse]
+	listDomains           *connect.Client[emptypb.Empty, v1.ListDomainsResponse]
 	deleteDomain          *connect.Client[v1.DeleteDomainRequest, emptypb.Empty]
-	verifyDomain          *connect.Client[v1.VerifyDomainRequest, v1.VerifyDomainResponse]
+	verifyDomain          *connect.Client[v1.VerifyDomainRequest, emptypb.Empty]
 }
 
 // GetDomain calls site_verification_v1.SiteVerificationService.GetDomain.
@@ -126,7 +126,7 @@ func (c *siteVerificationServiceClient) GetVerificationRecord(ctx context.Contex
 }
 
 // ListDomains calls site_verification_v1.SiteVerificationService.ListDomains.
-func (c *siteVerificationServiceClient) ListDomains(ctx context.Context, req *connect.Request[v1.ListDomainsRequest]) (*connect.Response[v1.ListDomainsResponse], error) {
+func (c *siteVerificationServiceClient) ListDomains(ctx context.Context, req *connect.Request[emptypb.Empty]) (*connect.Response[v1.ListDomainsResponse], error) {
 	return c.listDomains.CallUnary(ctx, req)
 }
 
@@ -136,7 +136,7 @@ func (c *siteVerificationServiceClient) DeleteDomain(ctx context.Context, req *c
 }
 
 // VerifyDomain calls site_verification_v1.SiteVerificationService.VerifyDomain.
-func (c *siteVerificationServiceClient) VerifyDomain(ctx context.Context, req *connect.Request[v1.VerifyDomainRequest]) (*connect.Response[v1.VerifyDomainResponse], error) {
+func (c *siteVerificationServiceClient) VerifyDomain(ctx context.Context, req *connect.Request[v1.VerifyDomainRequest]) (*connect.Response[emptypb.Empty], error) {
 	return c.verifyDomain.CallUnary(ctx, req)
 }
 
@@ -145,9 +145,9 @@ func (c *siteVerificationServiceClient) VerifyDomain(ctx context.Context, req *c
 type SiteVerificationServiceHandler interface {
 	GetDomain(context.Context, *connect.Request[v1.GetDomainRequest]) (*connect.Response[v1.GetDomainResponse], error)
 	GetVerificationRecord(context.Context, *connect.Request[v1.GetVerificationRecordRequest]) (*connect.Response[v1.GetVerificationRecordResponse], error)
-	ListDomains(context.Context, *connect.Request[v1.ListDomainsRequest]) (*connect.Response[v1.ListDomainsResponse], error)
+	ListDomains(context.Context, *connect.Request[emptypb.Empty]) (*connect.Response[v1.ListDomainsResponse], error)
 	DeleteDomain(context.Context, *connect.Request[v1.DeleteDomainRequest]) (*connect.Response[emptypb.Empty], error)
-	VerifyDomain(context.Context, *connect.Request[v1.VerifyDomainRequest]) (*connect.Response[v1.VerifyDomainResponse], error)
+	VerifyDomain(context.Context, *connect.Request[v1.VerifyDomainRequest]) (*connect.Response[emptypb.Empty], error)
 }
 
 // NewSiteVerificationServiceHandler builds an HTTP handler from the service implementation. It
@@ -216,7 +216,7 @@ func (UnimplementedSiteVerificationServiceHandler) GetVerificationRecord(context
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("site_verification_v1.SiteVerificationService.GetVerificationRecord is not implemented"))
 }
 
-func (UnimplementedSiteVerificationServiceHandler) ListDomains(context.Context, *connect.Request[v1.ListDomainsRequest]) (*connect.Response[v1.ListDomainsResponse], error) {
+func (UnimplementedSiteVerificationServiceHandler) ListDomains(context.Context, *connect.Request[emptypb.Empty]) (*connect.Response[v1.ListDomainsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("site_verification_v1.SiteVerificationService.ListDomains is not implemented"))
 }
 
@@ -224,6 +224,6 @@ func (UnimplementedSiteVerificationServiceHandler) DeleteDomain(context.Context,
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("site_verification_v1.SiteVerificationService.DeleteDomain is not implemented"))
 }
 
-func (UnimplementedSiteVerificationServiceHandler) VerifyDomain(context.Context, *connect.Request[v1.VerifyDomainRequest]) (*connect.Response[v1.VerifyDomainResponse], error) {
+func (UnimplementedSiteVerificationServiceHandler) VerifyDomain(context.Context, *connect.Request[v1.VerifyDomainRequest]) (*connect.Response[emptypb.Empty], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("site_verification_v1.SiteVerificationService.VerifyDomain is not implemented"))
 }
