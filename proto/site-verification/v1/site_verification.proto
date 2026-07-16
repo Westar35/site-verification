@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package site_verification.v1;
+
+option go_package = "github.com/Westar35/site-verification/gen/site-verification/v1;site_verification_v1";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+service SiteVerificationService {
+  rpc GetDomain(GetDomainRequest) returns (GetDomainResponse);
+  rpc GetVerificationRecord(GetVerificationRecordRequest) returns (GetVerificationRecordResponse);
+  rpc ListDomains(google.protobuf.Empty) returns (ListDomainsResponse);
+  rpc DeleteDomain(DeleteDomainRequest) returns (google.protobuf.Empty);
+  rpc VerifyDomain(VerifyDomainRequest) returns (google.protobuf.Empty);
+}
+
+enum RecordType {
+  RECORD_TYPE_UNSPECIFIED = 0;
+  RECORD_TYPE_TXT = 1;
+}
+
+message Domain {
+  string domain = 1;
+  bool verified = 2;
+  google.protobuf.Timestamp verified_at = 3;
+}
+
+message DNSRecord {
+  string name = 1;
+  RecordType type = 2;
+  string value = 3;
+}
+
+message GetDomainRequest {
+  string domain = 1;
+}
+
+message GetDomainResponse {
+  Domain domain = 1;
+}
+
+message GetVerificationRecordRequest {
+  string domain = 1;
+}
+
+message GetVerificationRecordResponse {
+  DNSRecord record = 1;
+}
+
+message ListDomainsResponse {
+  repeated Domain domains = 1;
+}
+
+message DeleteDomainRequest {
+  string domain = 1;
+}
+
+message VerifyDomainRequest {
+  string domain = 1;
+}
