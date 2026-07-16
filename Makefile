@@ -1,4 +1,4 @@
-.PHONY: test lint fmt proto mongo-up mongo-down
+.PHONY: test lint fmt proto
 
 test:
 	go test ./...
@@ -11,9 +11,3 @@ fmt:
 
 proto:
 	buf generate
-
-mongo-up:
-	docker run -d --name site-verification-mongo -p 27017:27017 mongo:7
-
-mongo-down:
-	docker rm -f site-verification-mongo
