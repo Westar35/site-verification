@@ -2,52 +2,67 @@ package domain_aggregate_domain_model_verified_user
 
 import (
 	"errors"
+	"fmt"
 	"time"
 
-	accountID "github.com/Westar35/dns-check-service/internal/domain/model/account_id"
-	dnsrecord "github.com/Westar35/dns-check-service/internal/domain/model/dns_record"
-	varificationHash "github.com/Westar35/dns-check-service/internal/domain/model/verification_hash"
+	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/dns_record"
+	"github.com/Westar35/site-verification/internal/domain/model/account_id"
 )
 
+var errInvalidModel = errors.New("invalid model")
+
 type VerifiedUser struct {
-	accountID        accountID.AccountID
-	verificationHash varificationHash.VerificationHash
-	record           dnsrecord.DNSRecord
-	verifiedAt       time.Time
-	createdAt        time.Time
-	updatedAt        time.Time
+	accountID  domain_model_account_id.AccountID
+	record     domain_aggregate_domain_model_dns_record.DNSRecord
+	verifiedAt time.Time
+	createdAt  time.Time
+	updatedAt  time.Time
 }
 
-func NewVerifiedUser(
-	accountID accountID.AccountID,
-	verificationHash varificationHash.VerificationHash,
-	record dnsrecord.DNSRecord,
-	verifiedAt, createdAt, updatedAt time.Time,
-) (VerifiedUser, error) {
-	u := VerifiedUser{
-		accountID:        accountID,
-		verificationHash: verificationHash,
-		record:           record,
-		verifiedAt:       verifiedAt,
-		createdAt:        createdAt,
-		updatedAt:        updatedAt,
-	}
-	if err := u.validate(); err != nil {
-		return VerifiedUser{}, err
-	}
-	return u, nil
+func (x VerifiedUser) GetAccountID() domain_model_account_id.AccountID {
+	return x.accountID
 }
 
-func (u VerifiedUser) validate() error {
-	if u.verifiedAt.IsZero() || u.createdAt.IsZero() || u.updatedAt.IsZero() {
-		return errors.New("verified user: timestamps required")
+func (x VerifiedUser) GetCreatedAt() time.Time {
+	return x.createdAt
+}
+
+func (x VerifiedUser) GetRecord() domain_aggregate_domain_model_dns_record.DNSRecord {
+	return x.record
+}
+
+func (x VerifiedUser) GetUpdatedAt() time.Time {
+	return x.updatedAt
+}
+
+func (x VerifiedUser) GetVerifiedAt() time.Time {
+	return x.verifiedAt
+}
+
+func (x VerifiedUser) validate() error {
+	if x.verifiedAt.IsZero() || x.createdAt.IsZero() || x.updatedAt.IsZero() {
+		return errInvalidModel
 	}
+
 	return nil
 }
 
-func (u VerifiedUser) AccountID() accountID.AccountID                      { return u.accountID }
-func (u VerifiedUser) VerificationHash() varificationHash.VerificationHash { return u.verificationHash }
-func (u VerifiedUser) Record() dnsrecord.DNSRecord                         { return u.record }
-func (u VerifiedUser) VerifiedAt() time.Time                               { return u.verifiedAt }
-func (u VerifiedUser) CreatedAt() time.Time                                { return u.createdAt }
-func (u VerifiedUser) UpdatedAt() time.Time                                { return u.updatedAt }
+func NewVerifiedUser(
+	accountID domain_model_account_id.AccountID,
+	record domain_aggregate_domain_model_dns_record.DNSRecord,
+	verifiedAt, createdAt, updatedAt time.Time,
+) (VerifiedUser, error) {
+	x := VerifiedUser{
+		accountID:  accountID,
+		record:     record,
+		verifiedAt: verifiedAt,
+		createdAt:  createdAt,
+		updatedAt:  updatedAt,
+	}
+
+	if err := x.validate(); err != nil {
+		return VerifiedUser{}, fmt.Errorf("new verified user: %w", err)
+	}
+
+	return x, nil
+}

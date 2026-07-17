@@ -4,15 +4,15 @@ import (
 	"context"
 	"errors"
 
-	accountID "github.com/Westar35/dns-check-service/internal/domain/model/account_id"
-	normalizeddomainname "github.com/Westar35/dns-check-service/internal/domain/model/normalized_domain_name"
+	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/domain_name"
+	"github.com/Westar35/site-verification/internal/domain/model/account_id"
 )
 
 var ErrNotFound = errors.New("domain: not found")
 
 type Repository interface {
-	FindByDomain(ctx context.Context, domain normalizeddomainname.NormalizedDomainName) (Domain, error)
-	Save(ctx context.Context, d Domain) error
-	Delete(ctx context.Context, domain normalizeddomainname.NormalizedDomainName) error
-	ListByAccount(ctx context.Context, accountID accountID.AccountID) ([]Domain, error)
+	Delete(ctx context.Context, domainName domain_aggregate_domain_model_domain_name.DomainName) error
+	Get(ctx context.Context, domainName domain_aggregate_domain_model_domain_name.DomainName) (*Domain, error)
+	ListByAccount(ctx context.Context, accountID domain_model_account_id.AccountID) ([]*Domain, error)
+	Save(ctx context.Context, domain *Domain) error
 }

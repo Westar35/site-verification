@@ -2,28 +2,32 @@ package domain_model_account_id
 
 import (
 	"errors"
+	"fmt"
 )
+
+var errInvalidModel = errors.New("invalid model")
 
 type AccountID struct {
 	value string
 }
 
-func (m AccountID) String() string {
-	return m.value
+func (x AccountID) GetValue() string {
+	return x.value
 }
 
-func (m AccountID) validate() error {
-	if m.value == "" {
-		return errors.New("account id: value required")
+func (x AccountID) validate() error {
+	if x.value == "" {
+		return errInvalidModel
 	}
+
 	return nil
 }
 
-func New(id string) (AccountID, error) {
-	model := AccountID{value: id}
-
-	if err := model.validate(); err != nil {
-		return AccountID{}, err
+func NewAccountID(raw string) (AccountID, error) {
+	x := AccountID{value: raw}
+	if err := x.validate(); err != nil {
+		return AccountID{}, fmt.Errorf("new account id: %w", err)
 	}
-	return model, nil
+
+	return x, nil
 }
