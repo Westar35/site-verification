@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/domain_name"
+	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/domain-name"
 )
 
 const recordNamePrefix = "_dns-check."
@@ -19,7 +19,7 @@ func (x RecordName) GetValue() string {
 	return x.value
 }
 
-func (x RecordName) validate() error {
+func (x RecordName) Validate() error {
 	if x.value == "" {
 		return errInvalidModel
 	}
@@ -29,7 +29,7 @@ func (x RecordName) validate() error {
 
 func NewRecordName(raw string) (RecordName, error) {
 	x := RecordName{value: raw}
-	if err := x.validate(); err != nil {
+	if err := x.Validate(); err != nil {
 		return RecordName{}, fmt.Errorf("new record name: %w", err)
 	}
 

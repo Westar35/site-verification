@@ -15,7 +15,7 @@ func (x AccountID) GetValue() string {
 	return x.value
 }
 
-func (x AccountID) validate() error {
+func (x AccountID) Validate() error {
 	if x.value == "" {
 		return errInvalidModel
 	}
@@ -25,7 +25,7 @@ func (x AccountID) validate() error {
 
 func NewAccountID(raw string) (AccountID, error) {
 	x := AccountID{value: raw}
-	if err := x.validate(); err != nil {
+	if err := x.Validate(); err != nil {
 		return AccountID{}, fmt.Errorf("new account id: %w", err)
 	}
 

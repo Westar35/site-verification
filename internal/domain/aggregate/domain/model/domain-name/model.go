@@ -20,7 +20,7 @@ func (x DomainName) GetValue() string {
 	return x.value
 }
 
-func (x DomainName) validate() error {
+func (x DomainName) Validate() error {
 	if !domainPattern.MatchString(x.value) {
 		return errInvalidModel
 	}
@@ -30,7 +30,7 @@ func (x DomainName) validate() error {
 
 func NewDomainName(raw string) (DomainName, error) {
 	x := DomainName{value: normalize(raw)}
-	if err := x.validate(); err != nil {
+	if err := x.Validate(); err != nil {
 		return DomainName{}, fmt.Errorf("new domain name: %w", err)
 	}
 

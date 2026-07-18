@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 
-	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/domain_name"
-	"github.com/Westar35/site-verification/internal/domain/model/account_id"
+	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/domain-name"
+	"github.com/Westar35/site-verification/internal/domain/model/account-id"
 )
 
 var ErrNotFound = errors.New("domain: not found")

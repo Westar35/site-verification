@@ -6,8 +6,8 @@ import (
 	"slices"
 	"time"
 
-	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/domain_name"
-	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/verified_user"
+	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/domain-name"
+	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/verified-user"
 )
 
 var errInvalidAggregate = errors.New("invalid aggregate")
@@ -37,7 +37,7 @@ func (x Domain) GetVerifiedUsers() []domain_aggregate_domain_model_verified_user
 	return slices.Clone(x.verifiedUsers)
 }
 
-func (x Domain) validate() error {
+func (x Domain) Validate() error {
 	if x.domainName.GetValue() == "" {
 		return errInvalidAggregate
 	}
@@ -55,7 +55,7 @@ func NewDomain(
 		opts[i](x)
 	}
 
-	if err := x.validate(); err != nil {
+	if err := x.Validate(); err != nil {
 		return nil, fmt.Errorf("new domain: %w", err)
 	}
 

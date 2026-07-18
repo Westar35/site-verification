@@ -3,10 +3,10 @@ package domain_aggregate_domain_model_dns_record
 import (
 	"fmt"
 
-	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/domain_name"
-	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/record_name"
-	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/record_value"
-	"github.com/Westar35/site-verification/internal/domain/model/account_id"
+	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/domain-name"
+	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/record-name"
+	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/record-value"
+	"github.com/Westar35/site-verification/internal/domain/model/account-id"
 )
 
 const recordTypeTXT = "TXT"

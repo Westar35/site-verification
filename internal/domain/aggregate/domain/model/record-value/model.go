@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/domain_name"
-	"github.com/Westar35/site-verification/internal/domain/model/account_id"
+	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/domain-name"
+	"github.com/Westar35/site-verification/internal/domain/model/account-id"
 )
 
 const (
@@ -26,7 +26,7 @@ func (x RecordValue) GetValue() string {
 	return x.value
 }
 
-func (x RecordValue) validate() error {
+func (x RecordValue) Validate() error {
 	if !strings.HasPrefix(x.value, recordValuePrefix) {
 		return errInvalidModel
 	}
@@ -41,7 +41,7 @@ func (x RecordValue) validate() error {
 
 func NewRecordValue(raw string) (RecordValue, error) {
 	x := RecordValue{value: raw}
-	if err := x.validate(); err != nil {
+	if err := x.Validate(); err != nil {
 		return RecordValue{}, fmt.Errorf("new record value: %w", err)
 	}
 

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/dns_record"
-	"github.com/Westar35/site-verification/internal/domain/model/account_id"
+	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/dns-record"
+	"github.com/Westar35/site-verification/internal/domain/model/account-id"
 )
 
 var errInvalidModel = errors.New("invalid model")
@@ -39,7 +39,7 @@ func (x VerifiedUser) GetVerifiedAt() time.Time {
 	return x.verifiedAt
 }
 
-func (x VerifiedUser) validate() error {
+func (x VerifiedUser) Validate() error {
 	if x.verifiedAt.IsZero() || x.createdAt.IsZero() || x.updatedAt.IsZero() {
 		return errInvalidModel
 	}
@@ -60,7 +60,7 @@ func NewVerifiedUser(
 		updatedAt:  updatedAt,
 	}
 
-	if err := x.validate(); err != nil {
+	if err := x.Validate(); err != nil {
 		return VerifiedUser{}, fmt.Errorf("new verified user: %w", err)
 	}
 
