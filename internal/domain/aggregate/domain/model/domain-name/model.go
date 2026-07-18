@@ -9,7 +9,7 @@ import (
 
 var (
 	domainPattern   = regexp.MustCompile(`^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$`)
-	errInvalidModel = errors.New("invalid model")
+	ErrInvalidModel = errors.New("invalid model")
 )
 
 type DomainName struct {
@@ -22,7 +22,7 @@ func (x DomainName) GetValue() string {
 
 func (x DomainName) Validate() error {
 	if !domainPattern.MatchString(x.value) {
-		return errInvalidModel
+		return ErrInvalidModel
 	}
 
 	return nil

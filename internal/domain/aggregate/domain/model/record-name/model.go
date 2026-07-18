@@ -9,7 +9,7 @@ import (
 
 const recordNamePrefix = "_dns-check."
 
-var errInvalidModel = errors.New("invalid model")
+var ErrInvalidModel = errors.New("invalid model")
 
 type RecordName struct {
 	value string
@@ -21,7 +21,7 @@ func (x RecordName) GetValue() string {
 
 func (x RecordName) Validate() error {
 	if x.value == "" {
-		return errInvalidModel
+		return ErrInvalidModel
 	}
 
 	return nil

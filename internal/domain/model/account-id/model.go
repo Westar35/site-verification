@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-var errInvalidModel = errors.New("invalid model")
+var ErrInvalidModel = errors.New("invalid model")
 
 type AccountID struct {
 	value string
@@ -17,7 +17,7 @@ func (x AccountID) GetValue() string {
 
 func (x AccountID) Validate() error {
 	if x.value == "" {
-		return errInvalidModel
+		return ErrInvalidModel
 	}
 
 	return nil
