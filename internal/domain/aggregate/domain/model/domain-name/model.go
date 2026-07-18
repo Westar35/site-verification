@@ -28,7 +28,7 @@ func (x DomainName) Validate() error {
 func NewDomainName(raw string) (DomainName, error) {
 	x := DomainName{value: normalize(raw)}
 	if err := x.Validate(); err != nil {
-		return DomainName{}, fmt.Errorf("new domain name: %w", err)
+		return DomainName{}, fmt.Errorf("invalid domain name: %w", err)
 	}
 
 	return x, nil

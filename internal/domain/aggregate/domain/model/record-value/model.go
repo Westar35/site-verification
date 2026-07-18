@@ -40,7 +40,7 @@ func (x RecordValue) Validate() error {
 func NewRecordValue(raw string) (RecordValue, error) {
 	x := RecordValue{value: raw}
 	if err := x.Validate(); err != nil {
-		return RecordValue{}, fmt.Errorf("new record value: %w", err)
+		return RecordValue{}, fmt.Errorf("invalid record value: %w", err)
 	}
 
 	return x, nil
@@ -54,7 +54,7 @@ func NewRecordValueFor(
 
 	x, err := NewRecordValue(recordValuePrefix + hex.EncodeToString(sum[:]))
 	if err != nil {
-		return RecordValue{}, fmt.Errorf("new record value for account and domain: %w", err)
+		return RecordValue{}, fmt.Errorf("invalid record value for account and domain: %w", err)
 	}
 
 	return x, nil

@@ -59,7 +59,7 @@ func NewVerifiedUser(
 	}
 
 	if err := x.Validate(); err != nil {
-		return VerifiedUser{}, fmt.Errorf("new verified user: %w", err)
+		return VerifiedUser{}, fmt.Errorf("invalid verified user: %w", err)
 	}
 
 	return x, nil

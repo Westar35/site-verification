@@ -35,12 +35,12 @@ func NewDNSRecordFor(
 ) (DNSRecord, error) {
 	recordName, err := domain_aggregate_domain_model_record_name.NewRecordNameFor(domainName)
 	if err != nil {
-		return DNSRecord{}, fmt.Errorf("new dns record name: %w", err)
+		return DNSRecord{}, fmt.Errorf("invalid dns record name: %w", err)
 	}
 
 	recordValue, err := domain_aggregate_domain_model_record_value.NewRecordValueFor(accountID, domainName)
 	if err != nil {
-		return DNSRecord{}, fmt.Errorf("new dns record value: %w", err)
+		return DNSRecord{}, fmt.Errorf("invalid dns record value: %w", err)
 	}
 
 	return DNSRecord{

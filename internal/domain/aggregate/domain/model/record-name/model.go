@@ -28,7 +28,7 @@ func (x RecordName) Validate() error {
 func NewRecordName(raw string) (RecordName, error) {
 	x := RecordName{value: raw}
 	if err := x.Validate(); err != nil {
-		return RecordName{}, fmt.Errorf("new record name: %w", err)
+		return RecordName{}, fmt.Errorf("invalid record name: %w", err)
 	}
 
 	return x, nil
@@ -37,7 +37,7 @@ func NewRecordName(raw string) (RecordName, error) {
 func NewRecordNameFor(domainName domain_aggregate_domain_model_domain_name.DomainName) (RecordName, error) {
 	x, err := NewRecordName(recordNamePrefix + domainName.GetValue())
 	if err != nil {
-		return RecordName{}, fmt.Errorf("new record name for domain: %w", err)
+		return RecordName{}, fmt.Errorf("invalid record name for domain: %w", err)
 	}
 
 	return x, nil

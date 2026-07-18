@@ -52,7 +52,7 @@ func NewDomain(
 	}
 
 	if err := x.Validate(); err != nil {
-		return nil, fmt.Errorf("new domain: %w", err)
+		return nil, fmt.Errorf("invalid domain: %w", err)
 	}
 
 	return x, nil
