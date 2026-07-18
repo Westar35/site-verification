@@ -12,8 +12,8 @@ import (
 const recordTypeTXT = "TXT"
 
 type DNSRecord struct {
-	recordType  string
 	recordName  domain_aggregate_domain_model_record_name.RecordName
+	recordType  string
 	recordValue domain_aggregate_domain_model_record_value.RecordValue
 }
 

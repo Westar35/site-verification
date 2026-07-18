@@ -6,20 +6,18 @@ import (
 	"slices"
 	"time"
 
-	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/domain-name"
-	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/verified-user"
+	domain_aggregate_domain_model_domain_name "github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/domain-name"
+	domain_aggregate_domain_model_verified_user "github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/verified-user"
 )
 
-var errInvalidAggregate = errors.New("invalid aggregate")
+var ErrInvalidAggregate = errors.New("invalid aggregate")
 
 type Domain struct {
-	domainName    domain_aggregate_domain_model_domain_name.DomainName
-	verifiedUsers []domain_aggregate_domain_model_verified_user.VerifiedUser
 	createdAt     time.Time
+	domainName    domain_aggregate_domain_model_domain_name.DomainName
 	updatedAt     time.Time
+	verifiedUsers []domain_aggregate_domain_model_verified_user.VerifiedUser
 }
-
-type Option func(x *Domain)
 
 func (x Domain) GetCreatedAt() time.Time {
 	return x.createdAt
@@ -39,7 +37,7 @@ func (x Domain) GetVerifiedUsers() []domain_aggregate_domain_model_verified_user
 
 func (x Domain) Validate() error {
 	if x.domainName.GetValue() == "" {
-		return errInvalidAggregate
+		return ErrInvalidAggregate
 	}
 
 	return nil
@@ -61,6 +59,8 @@ func NewDomain(
 
 	return x, nil
 }
+
+type Option func(x *Domain)
 
 func WithCreatedAt(createdAt time.Time) Option {
 	return func(x *Domain) {

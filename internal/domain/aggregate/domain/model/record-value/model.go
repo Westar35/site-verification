@@ -16,7 +16,7 @@ const (
 	hashHexLength     = 64
 )
 
-var errInvalidModel = errors.New("invalid model")
+var ErrInvalidModel = errors.New("invalid model")
 
 type RecordValue struct {
 	value string
@@ -28,12 +28,12 @@ func (x RecordValue) GetValue() string {
 
 func (x RecordValue) Validate() error {
 	if !strings.HasPrefix(x.value, recordValuePrefix) {
-		return errInvalidModel
+		return ErrInvalidModel
 	}
 
 	hash := strings.TrimPrefix(x.value, recordValuePrefix)
 	if len(hash) != hashHexLength {
-		return errInvalidModel
+		return ErrInvalidModel
 	}
 
 	return nil
