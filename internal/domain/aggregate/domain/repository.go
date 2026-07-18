@@ -2,13 +2,10 @@ package domain_aggregate_domain
 
 import (
 	"context"
-	"errors"
 
 	"github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/domain-name"
 	"github.com/Westar35/site-verification/internal/domain/model/account-id"
 )
-
-var ErrNotFound = errors.New("domain: not found")
 
 type Repository interface {
 	Delete(ctx context.Context, domainName domain_aggregate_domain_model_domain_name.DomainName) error

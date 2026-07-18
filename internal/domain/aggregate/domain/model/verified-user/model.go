@@ -9,8 +9,6 @@ import (
 	"github.com/Westar35/site-verification/internal/domain/model/account-id"
 )
 
-var ErrInvalidModel = errors.New("invalid model")
-
 type VerifiedUser struct {
 	accountID  domain_model_account_id.AccountID
 	createdAt  time.Time
@@ -41,7 +39,7 @@ func (x VerifiedUser) GetVerifiedAt() time.Time {
 
 func (x VerifiedUser) Validate() error {
 	if x.verifiedAt.IsZero() || x.createdAt.IsZero() || x.updatedAt.IsZero() {
-		return ErrInvalidModel
+		return errors.New("invalid model")
 	}
 
 	return nil

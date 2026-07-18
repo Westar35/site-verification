@@ -10,8 +10,6 @@ import (
 	domain_aggregate_domain_model_verified_user "github.com/Westar35/site-verification/internal/domain/aggregate/domain/model/verified-user"
 )
 
-var ErrInvalidAggregate = errors.New("invalid aggregate")
-
 type Domain struct {
 	createdAt     time.Time
 	domainName    domain_aggregate_domain_model_domain_name.DomainName
@@ -37,7 +35,7 @@ func (x Domain) GetVerifiedUsers() []domain_aggregate_domain_model_verified_user
 
 func (x Domain) Validate() error {
 	if x.domainName.GetValue() == "" {
-		return ErrInvalidAggregate
+		return errors.New("invalid aggregate")
 	}
 
 	return nil
